@@ -11,3 +11,384 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12pt;
+  font-weight: normal;
+  line-height: 1.5rem;
+}
+
+body {
+  padding-top: 5rem;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+p {
+  margin-top: 1rem;
+  text-align: justify;
+}
+
+.headerBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1d3a4e;
+  color: #fff;
+  height: 5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+}
+
+.appName {
+  font-size: 2rem;
+  margin-left: 1rem;
+}
+
+.badge {
+  border: thin solid black;
+  border-radius: 0.75rem;
+  min-width: 1.25rem;
+  margin-right: 1rem;
+  background-color: #fff;
+  color: #000;
+  text-align: center;
+}
+
+.componentHeader {
+  position: fixed;
+  left: 0;
+  padding: 1rem 0;
+  background-color: #fff;
+  height: 3rem;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.componentTitle {
+  margin-left: 1rem;
+  flex: 1;
+}
+
+.componentTitle ~ *:last-child {
+  margin-right: 1rem;
+}
+
+.componentContent {
+  padding: 1rem;
+}
+
+.componentHeader + .componentContent {
+  padding-top: 5.5rem;
+}
+
+.button {
+  height: 3rem;
+  min-width: 3rem;
+  line-height: 1rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  background-color: #edf6f9;
+  border: thin solid #dce5e8;
+  color: #000;
+}
+
+.button:active {
+  background: #cbd4d7;
+  border: thin solid #bac3c6;
+}
+
+.button img {
+  display: inline-block;
+  height: 1rem;
+  width: 1rem;
+  vertical-align: middle;
+  padding: 0.25rem;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: row;
+}
+
+.buttonGroup.end {
+  justify-content: end;
+}
+
+.buttonGroup .button {
+  flex: 1;
+  border-radius: 0;
+}
+
+.buttonGroup .button.half {
+  flex: 0.5;
+}
+
+.buttonGroup .button.thrid {
+  flex: 0.33;
+}
+
+.buttonGroup .button.quarter {
+  flex: 0.25;
+}
+
+.buttonGroup .button:first-child {
+  border-radius: 0.35rem 0 0 0.35rem;
+}
+
+.buttonGroup .button:last-child {
+  border-radius: 0 0.35rem 0.35rem 0;
+}
+
+.buttonGroup .button:last-child:first-child {
+  border-radius: 0.35rem;
+}
+
+.navBar {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  color: #000;
+  background-color: #edf6f9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navBar.bottom {
+  bottom: 0;
+}
+
+.navBar:not(.bottom)~* {
+  margin-top: 4rem;
+}
+
+.navBar .buttonGroup {
+  flex: 1;
+}
+
+.navBar .button {
+  height: 4rem;
+}
+
+.navBar .buttonGroup .button:first-child,
+.navBar .buttonGroup .button:last-child {
+  border-radius: 0;
+}
+
+.hidden {
+  display: none;
+}
+
+.field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field label {
+  margin-right: 1rem;
+}
+
+.field input {
+  flex: 1;
+  height: 2rem;
+  padding: 0.3rem 0.7rem;
+  background: #fff;
+  color: #000;
+  border: thin solid #dce5e8;
+  border-radius: 0.35rem;
+}
+
+.field input.valid {
+  border: thin solid #de122b;
+}
+
+.field input.invalid {
+  border: thin solid #198c7e;
+}
+
+.field label.half {
+  flex: 1;
+}
+
+.field label.thrid {
+  flex: 0.5;
+}
+
+.field label.quarter {
+  flex: 0.33;
+}
+
+.field label.fifth {
+  flex: 0.25;
+}
+
+.list {
+  width: 100%;
+  list-style: none;
+}
+
+.list li {
+  background: #fff;
+  color: #000;
+  border-width: 0 thin thin thin;
+  border-color: #dce5e8;
+  border-style: solid;
+  padding: 1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.list li:first-child {
+  border-top-width: thin;
+  border-radius: 0.35rem 0.35rem 0 0;
+}
+
+.list li:last-child {
+  border-radius: 0 0 0.35rem 0.35rem;
+}
+
+.list li.active {
+  color: #fff;
+  background: #3b78ac;
+  border: thin solid #2a679b;
+}
+
+.list li.active:active {
+  background: #19568a;
+  border: thin solid #084579;
+}
+
+/*Colors*/
+.active {
+  color: #fff;
+  background: #3b78ac;
+  border: thin solid #2a679b;
+}
+
+.active:active {
+  background: #19568a;
+  border: thin solid #084579;
+}
+
+.primary {
+  color: #fff;
+  background: #3b78ac;
+  border: thin solid #2a679b;
+}
+
+.primary:active {
+  background: #19568a;
+  border: thin solid #084579;
+}
+
+.secondary {
+  color: #000;
+  background: #cddfeb;
+  border: thin solid #bcceda;
+}
+
+.secondary:active {
+  background: #abbdc9;
+  border: thin solid #9aacb8;
+}
+
+.success {
+  color: #fff;
+  background: #2a9d8f;
+  border: thin solid #198c7e;
+}
+
+.success:active {
+  background: #087b6d;
+  border: thin solid #006a5c;
+}
+
+.warning {
+  color: #000;
+  background: #ffd166;
+  border: thin solid #eec055;
+}
+
+.warning:active {
+  background: #ddb044;
+  border: thin solid #cca033;
+}
+
+.danger {
+  color: #fff;
+  background: #ef233c;
+  border: thin solid #de122b;
+}
+
+.danger:active {
+  background: #cd011a;
+  border: thin solid #bc0009;
+}
+
+.light {
+  color: #000;
+  background: #edf6f9;
+  border: thin solid #dce5e8;
+}
+
+.light:active {
+  background: #cbd4d7;
+  border: thin solid #bac3c6;
+}
+
+.dark {
+  color: #fff;
+  background: #1d3a4e;
+  border: thin solid #0c293d;
+}
+
+.dark:active {
+  background: #00182c;
+  border: thin solid #00071b;
+}
+
+
+/*Sizings*/
+.mt1 {
+  margin-top: 1rem;
+}
+
+.mt2 {
+  margin-top: 2rem;
+}
+
+.mt3 {
+  margin-top: 3rem;
+}
+
+.mt4 {
+  margin-top: 4rem;
+}

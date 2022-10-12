@@ -1,0 +1,10 @@
+#blank {
+    padding-top: 5rem;
+    opacity: 0.25;
+    width: 100%;
+    text-align: center;
+}
+
+#blank * {
+    text-align: center;
+}
