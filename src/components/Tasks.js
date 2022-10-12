@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Task from './Task';
 import "./Tasks.css";
 
 class Tasks extends Component {
@@ -66,7 +67,7 @@ class Tasks extends Component {
         return (
             <ul className={`list ${this.isListEmpty() ? "hidden" : ""}`}>
                 {this.state.tasks.map(
-                    (t, i) => <li key={i}>{t}</li>
+                    (i) => <Task key={i} />
                 )}
             </ul>
         );
