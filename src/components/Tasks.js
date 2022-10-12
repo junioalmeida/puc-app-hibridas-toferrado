@@ -29,7 +29,8 @@ class Tasks extends Component {
                             <input type='text' 
                                 autoComplete='off'
                                 onChange={this.updateNewTaskField}
-                                value={this.state.newTask} />
+                                value={this.state.newTask}
+                                onKeyPress={this.enterPressed} />
                             <button className='button primary' onClick={this.addTaskToList}>
                                 <img src='./resources/plus1.png' alt='addTask' />
                             </button>
@@ -39,6 +40,19 @@ class Tasks extends Component {
             </div>
         );
     }
+
+    editTask = (oldTask, newTask) => {
+        const i = this.state.tasks.indexOf(oldTask);
+        const newList = this.state.tasks;
+        newList[i] = newTask;
+        this.setState({
+            tasks: newList
+        });
+    };
+
+    enterPressed = (e) => {
+        if(e.key === "Enter") this.addTaskToList();
+    };
 
     updateNewTaskField = (event) => {
         this.setState({
@@ -67,7 +81,7 @@ class Tasks extends Component {
         return (
             <ul className={`list ${this.isListEmpty() ? "hidden" : ""}`}>
                 {this.state.tasks.map(
-                    (t, i) => <Task key={i} description={t}/>
+                    (t, i) => <Task key={i} description={t} onEdit={this.editTask}/>
                 )}
             </ul>
         );
