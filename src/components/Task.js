@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 class Task extends Component {
 
     state = {
-        content: "Task"
+        content: this.props.description
     };
 
     render() {

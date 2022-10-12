@@ -67,7 +67,7 @@ class Tasks extends Component {
         return (
             <ul className={`list ${this.isListEmpty() ? "hidden" : ""}`}>
                 {this.state.tasks.map(
-                    (i) => <Task key={i} />
+                    (t, i) => <Task key={i} description={t}/>
                 )}
             </ul>
         );
