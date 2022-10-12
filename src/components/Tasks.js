@@ -4,8 +4,9 @@ import "./Tasks.css";
 class Tasks extends Component {
 
     state = {
-        tasks: ["Declara IRPF", "Estudar React", "Revisão do carro"]
+        tasks: ["Declara IRPF", "Estudar React", "Revisão do carro"],
         //tasks: []
+        newTask: ""
     };
 
     image = "/resources/hangloose.png";
@@ -24,7 +25,10 @@ class Tasks extends Component {
                         </div>
                         <div>{this.listTasks()}</div>
                         <div className='field mt2'>
-                            <input id='newTaskFieldContent' type='text' autoComplete='off'/>
+                            <input type='text' 
+                                autoComplete='off'
+                                onChange={this.updateNewTaskField}
+                                value={this.state.newTask} />
                             <button className='button primary' onClick={this.addTaskToList}>
                                 <img src='./resources/plus1.png' alt='addTask' />
                             </button>
@@ -35,16 +39,20 @@ class Tasks extends Component {
         );
     }
 
+    updateNewTaskField = (event) => {
+        this.setState({
+            newTask: event.target.value
+        });
+    };
+
     addTaskToList = () => {
-        let field = document.getElementById('newTaskFieldContent');
-        const newTaskList = [...this.state.tasks, field.value];
-        if(field.value !== ""){
+        const newTaskList = [...this.state.tasks, this.state.newTask];
+        if(this.state.newTask !== ""){
             this.setState({
-                tasks: newTaskList
+                tasks: newTaskList,
+                newTask: ""
             });
         }
-
-        field.value = "";
     };
 
     isListEmpty() {
