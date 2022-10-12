@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 class Task extends Component {
 
     state = {
+        id: this.props.id,
         content: this.props.description,
         edit: false
     };
@@ -10,10 +11,12 @@ class Task extends Component {
     style = {
         height: "2.7rem"
     };
+
     iEdit = "./resources/edit.png";
+    iDelete = "./resources/delete.png";
 
     render() {
-        if(this.state.edit) {
+        if (this.state.edit) {
             return (
                 <li style={this.style}>
                     <input
@@ -33,11 +36,18 @@ class Task extends Component {
                         <button className='button primary' onClick={this.edit}>
                             <img src={this.iEdit} alt="editTask" />
                         </button>
+                        <button className='button danger' onClick={this.deleteTask}>
+                            <img src={this.iDelete} alt="deleteTask" />
+                        </button>
                     </span>
                 </li>
             );
         }
     }
+
+    deleteTask = () => {
+        this.props.onDelete(this.props.id);
+    };
 
     changeTask = (e) => {
         this.setState({
@@ -49,7 +59,7 @@ class Task extends Component {
         this.setState({
             edit: false
         });
-        this.props.onEdit(this.props.description, this.state.description);
+        this.props.onEdit(this.props.id, this.state.description);
     };
 
     edit = () => {
@@ -59,7 +69,7 @@ class Task extends Component {
     };
 
     enterPressed = (e) => {
-        if(e.key === "Enter") this.confirmEdit();
+        if (e.key === "Enter") this.confirmEdit();
     }
 }
 

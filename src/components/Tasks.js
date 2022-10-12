@@ -5,9 +5,14 @@ import "./Tasks.css";
 class Tasks extends Component {
 
     state = {
-        tasks: ["Declara IRPF", "Estudar React", "Revisão do carro"],
+        tasks: [
+            {id: 1, description: "Declara IRPF" },
+            {id: 2, description: "Estudar React"},
+            {id: 3, description: "Revisão do carro"}
+        ],
         //tasks: []
-        newTask: ""
+        newTask: "",
+        taskId: 4
     };
 
     image = "/resources/hangloose.png";
@@ -41,10 +46,21 @@ class Tasks extends Component {
         );
     }
 
-    editTask = (oldTask, newTask) => {
-        const i = this.state.tasks.indexOf(oldTask);
+    deleteTask = (idTask) => {
+        const newList = this.state.tasks.filter(
+            t => t.id !== idTask
+        );
+        this.setState({
+            tasks: newList
+        });
+    };
+
+    editTask = (idTask, newTask) => {
+        const i = this.state.tasks.findIndex(
+            t => t.id === idTask
+        );
         const newList = this.state.tasks;
-        newList[i] = newTask;
+        newList[i] = {id: idTask, description: newTask};
         this.setState({
             tasks: newList
         });
@@ -61,11 +77,14 @@ class Tasks extends Component {
     };
 
     addTaskToList = () => {
-        const newTaskList = [...this.state.tasks, this.state.newTask];
+        const newTask = {id: this.state.taskId, description: this.state.newTask};
+        const newTaskList = [...this.state.tasks, newTask];
+        const newTaskId = this.state.taskId + 1;
         if(this.state.newTask !== ""){
             this.setState({
                 tasks: newTaskList,
-                newTask: ""
+                newTask: "",
+                taskId: newTaskId
             });
         }
     };
@@ -81,7 +100,12 @@ class Tasks extends Component {
         return (
             <ul className={`list ${this.isListEmpty() ? "hidden" : ""}`}>
                 {this.state.tasks.map(
-                    (t, i) => <Task key={i} description={t} onEdit={this.editTask}/>
+                    (t) => <Task 
+                    key={t.id}
+                    id={t.id}
+                    description={t.description}
+                    onEdit={this.editTask}
+                    onDelete={this.deleteTask}/>
                 )}
             </ul>
         );
