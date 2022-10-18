@@ -5,14 +5,7 @@ import "./Tasks.css";
 class Tasks extends Component {
 
     state = {
-        tasks: [
-            {id: 1, description: "Declara IRPF" },
-            {id: 2, description: "Estudar React"},
-            {id: 3, description: "Revisão do carro"}
-        ],
-        //tasks: []
-        newTask: "",
-        taskId: 4
+        newTask: ""
     };
 
     image = "/resources/hangloose.png";
@@ -31,12 +24,12 @@ class Tasks extends Component {
                         </div>
                         <div>{this.listTasks()}</div>
                         <div className='field mt2'>
-                            <input type='text' 
+                            <input type='text'
                                 autoComplete='off'
                                 onChange={this.updateNewTaskField}
                                 value={this.state.newTask}
                                 onKeyPress={this.enterPressed} />
-                            <button className='button primary' onClick={this.addTaskToList}>
+                            <button className='button primary' onClick={this.onAdd}>
                                 <img src='./resources/plus1.png' alt='addTask' />
                             </button>
                         </div>
@@ -46,28 +39,17 @@ class Tasks extends Component {
         );
     }
 
-    deleteTask = (idTask) => {
-        const newList = this.state.tasks.filter(
-            t => t.id !== idTask
-        );
-        this.setState({
-            tasks: newList
-        });
-    };
 
-    editTask = (idTask, newTask) => {
-        const i = this.state.tasks.findIndex(
-            t => t.id === idTask
-        );
-        const newList = this.state.tasks;
-        newList[i] = {id: idTask, description: newTask};
-        this.setState({
-            tasks: newList
-        });
-    };
+    onAdd = () => {
+        if(this.state.newTask === "") {
+            return;
+        }
 
-    enterPressed = (e) => {
-        if(e.key === "Enter") this.addTaskToList();
+        this.props.onAdd(this.state.newTask);
+
+        this.setState({
+            newTask: ""
+        });
     };
 
     updateNewTaskField = (event) => {
@@ -76,21 +58,12 @@ class Tasks extends Component {
         });
     };
 
-    addTaskToList = () => {
-        const newTask = {id: this.state.taskId, description: this.state.newTask};
-        const newTaskList = [...this.state.tasks, newTask];
-        const newTaskId = this.state.taskId + 1;
-        if(this.state.newTask !== ""){
-            this.setState({
-                tasks: newTaskList,
-                newTask: "",
-                taskId: newTaskId
-            });
-        }
+    enterPressed = (e) => {
+        if (e.key === "Enter") this.onAdd();
     };
 
     isListEmpty() {
-        return this.state.tasks.length === 0;
+        return this.props.tasks.length === 0;
     }
 
     listTasks() {
@@ -99,13 +72,13 @@ class Tasks extends Component {
         }
         return (
             <ul className={`list ${this.isListEmpty() ? "hidden" : ""}`}>
-                {this.state.tasks.map(
-                    (t) => <Task 
-                    key={t.id}
-                    id={t.id}
-                    description={t.description}
-                    onEdit={this.editTask}
-                    onDelete={this.deleteTask}/>
+                {this.props.tasks.map(
+                    (t) => <Task
+                        key={t.id}
+                        id={t.id}
+                        description={t.description}
+                        onEdit={this.props.onEdit}
+                        onDelete={this.props.onDelete} />
                 )}
             </ul>
         );
