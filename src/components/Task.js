@@ -1,76 +1,59 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 
-class Task extends Component {
+const Task = (props) => {
 
-    state = {
-        id: this.props.id,
-        content: this.props.description,
-        edit: false
-    };
+    // eslint-disable-next-line no-unused-vars
+    const [id, setId] = useState(props.id);
+    const [content, setContent] = useState(props.description);
+    const [edit, setEdit] = useState(false);
 
-    style = {
+    const iEdit = "./resources/edit.png";
+    const iDelete = "./resources/delete.png";
+    const style = {
         height: "2.7rem"
     };
 
-    iEdit = "./resources/edit.png";
-    iDelete = "./resources/delete.png";
+    useEffect(() => {
+        setContent(props.description);
+    }, [props.description]);
 
-    render() {
-        if (this.state.edit) {
-            return (
-                <li style={this.style}>
-                    <input
-                        value={this.state.content}
-                        onChange={this.changeTask}
-                        onBlur={this.confirmEdit}
-                        onKeyPress={this.enterPressed}
-                        autoFocus
-                    />
-                </li>
-            );
-        } else {
-            return (
-                <li style={this.style}>
-                    <span>{this.state.content}</span>
-                    <span className='buttonGroup end'>
-                        <button className='button primary' onClick={this.edit}>
-                            <img src={this.iEdit} alt="editTask" />
-                        </button>
-                        <button className='button danger' onClick={this.deleteTask}>
-                            <img src={this.iDelete} alt="deleteTask" />
-                        </button>
-                    </span>
-                </li>
-            );
-        }
-    }
-
-    deleteTask = () => {
-        this.props.onDelete(this.props.id);
+    const deleteTask = () => props.onDelete(props.id);
+    
+    const changeTask = (e) => setContent(e.target.value);
+    
+    const confirmEdit = () => {
+        setEdit(false);
+        setId(props.id);
+        props.onEdit(props.id, content);
     };
+    
+    const editTask = () => setEdit(true);
+    
+    const enterPressed = (e) => (e.key === "Enter") && confirmEdit();
 
-    changeTask = (e) => {
-        this.setState({
-            content: e.target.value
-        });
-    };
-
-    confirmEdit = () => {
-        this.setState({
-            edit: false
-        });
-        this.props.onEdit(this.props.id, this.state.content);
-    };
-
-    edit = () => {
-        this.setState({
-            edit: true
-        });
-    };
-
-    enterPressed = (e) => {
-        if (e.key === "Enter") this.confirmEdit();
-    }
+    return edit ? (
+        <li style={style}>
+            <input
+                value={content}
+                onChange={changeTask}
+                onBlur={confirmEdit}
+                onKeyPress={enterPressed}
+                autoFocus
+            />
+        </li>
+    ) : (
+        <li style={style}>
+            <span>{content}</span>
+            <span className='buttonGroup end'>
+                <button className='button primary' onClick={editTask}>
+                    <img src={iEdit} alt="editTask" />
+                </button>
+                <button className='button danger' onClick={deleteTask}>
+                    <img src={iDelete} alt="deleteTask" />
+                </button>
+            </span>
+        </li>
+    );
 }
 
 export default Task;

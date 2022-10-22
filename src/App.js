@@ -1,74 +1,52 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
 
-class App extends Component {
+const App = () => {
 
-  state = {
-    tasks: [],
-    taskId: 1
-  };
+  let t = JSON.parse(localStorage.getItem('tasks'));
+  let i = JSON.parse(localStorage.getItem('currentTaskId'));
 
-  constructor(props) {
-    super(props);
-    const t = JSON.parse(localStorage.getItem('tasks'));
-    const i = JSON.parse(localStorage.getItem('currentTaskId'));
-
-    if(t && i) {
-      this.state.tasks = t;
-      this.state.taskId = i;
-    }
+  if (!t) {
+    t = [];
+    i = 1;
   }
 
-  componentDidUpdate() {
-    localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
-    localStorage.setItem('currentTaskId', JSON.stringify(this.state.taskId));
-  }
+  const [tasks, setTasks] = useState(t);
+  const [taskId, setTaskId] = useState(i);
 
-  render() {
-    return (
-      <div className="App">
-        <Header sizePendingTasks={this.state.tasks.length}/>
-        <Tasks tasks={this.state.tasks} 
-          onAdd={this.addTaskToList}
-          onDelete={this.deleteTask}
-          onEdit={this.editTask}
-        />
-      </div>
-    );
-  }
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    localStorage.setItem('currentTaskId', JSON.stringify(taskId));
+  });
 
-  deleteTask = (idTask) => {
-    const newList = this.state.tasks.filter(
-      t => t.id !== idTask
-    );
-    this.setState({
-      tasks: newList
-    });
-  };
+  const deleteTask = (idTask) => setTasks(tasks.filter(t => t.id !== idTask));
 
-  editTask = (idTask, newTask) => {
-    const i = this.state.tasks.findIndex(
+  const editTask = (idTask, newTask) => {
+    const i = tasks.findIndex(
       t => t.id === idTask
     );
-    const newList = this.state.tasks;
+    const newList = tasks;
     newList[i] = { id: idTask, description: newTask };
-    this.setState({
-      tasks: newList
-    });
+    setTasks(newList);
   };
 
-  addTaskToList = (t) => {
-    const newTask = { id: this.state.taskId, description: t };
-    const newTaskList = [...this.state.tasks, newTask];
-    const newTaskId = this.state.taskId + 1;
-    if (this.state.newTask !== "") {
-      this.setState({
-        tasks: newTaskList,
-        taskId: newTaskId
-      });
-    }
+  const addTaskToList = (t) => {
+    const newTask = { id: taskId, description: t };
+    setTasks([...tasks, newTask]);
+    setTaskId(taskId + 1);
   };
+
+  return (
+    <div className="App">
+      <Header sizePendingTasks={tasks.length} />
+      <Tasks tasks={tasks}
+        onAdd={addTaskToList}
+        onDelete={deleteTask}
+        onEdit={editTask}
+      />
+    </div>
+  );
 }
 
 export default App;
