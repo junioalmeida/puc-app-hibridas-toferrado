@@ -59,7 +59,7 @@ class Task extends Component {
         this.setState({
             edit: false
         });
-        this.props.onEdit(this.props.id, this.state.description);
+        this.props.onEdit(this.props.id, this.state.content);
     };
 
     edit = () => {

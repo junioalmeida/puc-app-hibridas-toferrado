@@ -5,13 +5,25 @@ import Tasks from './components/Tasks';
 class App extends Component {
 
   state = {
-    tasks: [
-      { id: 1, description: "Declara IRPF" },
-      { id: 2, description: "Estudar React" },
-      { id: 3, description: "Revisão do carro" }
-    ],
-    taskId: 4
+    tasks: [],
+    taskId: 1
   };
+
+  constructor(props) {
+    super(props);
+    const t = JSON.parse(localStorage.getItem('tasks'));
+    const i = JSON.parse(localStorage.getItem('currentTaskId'));
+
+    if(t && i) {
+      this.state.tasks = t;
+      this.state.taskId = i;
+    }
+  }
+
+  componentDidUpdate() {
+    localStorage.setItem('tasks', JSON.stringify(this.state.tasks));
+    localStorage.setItem('currentTaskId', JSON.stringify(this.state.taskId));
+  }
 
   render() {
     return (
