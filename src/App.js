@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Tasks from './components/Tasks';
+import NavBar from './components/NavBar';
+import About from './components/About';
 
 const App = () => {
 
@@ -39,12 +42,21 @@ const App = () => {
 
   return (
     <div className="App">
-      <Header sizePendingTasks={tasks.length} />
-      <Tasks tasks={tasks}
-        onAdd={addTaskToList}
-        onDelete={deleteTask}
-        onEdit={editTask}
-      />
+      <Router>
+        <Header sizePendingTasks={tasks.length} />
+        <NavBar />
+
+        <Routes>
+          <Route path='/' element={
+            <Tasks tasks={tasks}
+              onAdd={addTaskToList}
+              onDelete={deleteTask}
+              onEdit={editTask}
+            />} />
+          <Route path='/about' element={<About/>} />
+        </Routes>
+      </Router>
+
     </div>
   );
 }
